@@ -9,8 +9,14 @@ module.exports = {
   theme: {
     extend: {
       colors : {
-        primary: '#0f0D23',
-      }
+        primary: '#1a1730',
+        secondary:"#f4f4f5"
+      },
+       fontFamily: {
+        inter: ['Inter'],
+        'inter-bold': ['InterBold'],
+        'inter-semibold': ['InterSemiBold'],
+      },
     },
   },
   plugins: [],

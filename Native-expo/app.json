@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Native Expo",
-    "slug": "demo",
+    "name": "FinLog",
+    "slug": "FinLog",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -33,7 +33,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
