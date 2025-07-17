@@ -75,7 +75,7 @@ const Profile = () => {
 
   return (
     <ScrollView className="flex-1 pt-20 px-6 bg-primary dark:bg-[#0f172a]">
-      {/* 🧑 Profile Image */}
+      {/* Profile Image */}
       <View className="items-center ">
         <TouchableOpacity
           onPress={() =>
@@ -92,7 +92,7 @@ const Profile = () => {
             className="w-32 h-32 rounded-full mb-5"
           />
 
-          <View className="absolute bottom-3 right-3 bg-primary p-2 rounded-full shadow-md">
+          <View className="absolute bottom-4 right-2 bg-gray-900 p-2 rounded-full shadow-md">
             <Ionicons name="add" size={15} color="#fff" />
           </View>
         </TouchableOpacity>
@@ -101,7 +101,8 @@ const Profile = () => {
           value={name}
           onChangeText={setName}
           placeholder="Your Name"
-          className="font-inter-bold text-2xl text-secondary dark:text-white text-center"
+          className="font-inter-bold text-2xl text-secondary  text-center"
+          placeholderTextColor="gray"
         />
 
       </View>

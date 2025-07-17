@@ -52,7 +52,7 @@ export default function Layout() {
 
       <Tabs.Screen name="add" options={{
         title: "add", headerShown: false, tabBarIcon: ({ focused }) => (
-          <FocusedIcon focused={focused} title="Finance" icons="add-outline" />
+          <FocusedIcon focused={focused} title="Add Entry" icons="add-outline" />
         )
       }} />
 

@@ -7,22 +7,22 @@ import { useProfile } from "../hooks/useProfile";
 
 export default function Index() {
 
-
   const {profile} = useProfile()
-
-
-
 
   return (
     <View className="flex-1 pt-20 bg-primary" >
 
       <View className="flex-row items-center px-6 mb-2">
-        <Image
+      {
+        profile?.profilePic && (  <Image
           source={{ uri: profile?.profilePic }}
-          className="w-10 h-10 rounded-full mr-3"
-        />
+          className="w-8 h-8 rounded-full mr-3"
+        />)
+      }
         <Text className="text-secondary font-inter-semibold text-xl">
-          Hello {profile?.name || 'User'}
+          {
+            profile?.name?`Hello ${profile?.name}`:"Welcome!"
+          }
         </Text>
       </View>
 
