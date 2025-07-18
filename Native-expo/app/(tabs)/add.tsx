@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Platform, KeyboardAvoidingView, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Platform, KeyboardAvoidingView, Image } from 'react-native';
 import React, { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import dayjs from 'dayjs';
@@ -30,15 +30,16 @@ const AddTransaction = () => {
   //Add transaction function
   const { addTransaction } = useAddTransaction();
 
-  const handleAddTransaction = () => {
+  const handleAddTransaction = async () => {
     if (!amount) {
       Toast.show({
-      type: 'error',
-      text1: 'Missing amount!',
-      text2: 'Please enter an amount to continue.',
-    });
-  }
-      addTransaction({
+        type: 'error',
+        text1: 'Missing amount!',
+        text2: 'Please enter an amount to continue.',
+      });
+    }
+    else {
+      await addTransaction({
         id: uuidv4() as string,
         amount: parseFloat(amount),
         type,
@@ -53,21 +54,35 @@ const AddTransaction = () => {
       setCategory('Food');
       setDate(new Date());
       setType('expense');
+    }
 
   }
 
 
   return (
+
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
 
-
       <ScrollView className="flex-1 bg-primary px-6 pt-20"
         contentContainerStyle={{ paddingBottom: 200 }}
         keyboardShouldPersistTaps="handled"
       >
+
+
+        <View className="flex-row items-center justify-center mb-5 space-x-3">
+          <Image
+            source={require('../../assets/images/logo.png')}
+            className="w-12 h-12"
+            resizeMode="contain"
+          />
+          <Text className="text-white text-xl font-inter-bold">Track It</Text>
+        </View>
+
+
+
         <Text className="text-2xl font-inter-semibold text-secondary dark:text-white mb-3">Add Transaction</Text>
 
         <Text className=" text-gray-500 dark:text-gray-400 font-inter-semibold mb-4">
@@ -92,7 +107,7 @@ const AddTransaction = () => {
           <TouchableOpacity
             onPress={() => {
               setType('income');
-              setCategory('Salary'); 
+              setCategory('Salary');
             }}
             className={`flex-1 p-3 rounded-xl items-center ${type === 'income' ? 'bg-green-500' : 'bg-white dark:bg-gray-800'
               }`}
@@ -125,8 +140,8 @@ const AddTransaction = () => {
                 key={item}
                 onPress={() => setCategory(item)}
                 className={`px-4 py-2 rounded-lg border  ${category === item
-                    ? 'bg-purple-300 border-purple-600'
-                    : 'border-gray-300 dark:border-gray-600'
+                  ? 'bg-purple-300 border-purple-600'
+                  : 'border-gray-300 dark:border-gray-600'
                   }`}
               >
                 <Text
@@ -173,7 +188,7 @@ const AddTransaction = () => {
             className="text-[#94a3b8] text-lg font-inter-semibold"
           />
         </View>
-       
+
         <TouchableOpacity className="bg-purple-300 p-4 rounded-xl items-center">
           <Text className="text-primary font-inter-bold text-lg" onPress={handleAddTransaction}>Add Transaction</Text>
         </TouchableOpacity>

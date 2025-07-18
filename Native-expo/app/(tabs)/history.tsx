@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, Modal ,Image } from 'react-native';
 import React, { useState } from 'react';
 import { useDeleteTransaction, useGetTransactions } from '../hooks/useTransactions';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -111,8 +111,20 @@ const history = () => {
 
   return (
     <View className="bg-primary flex-1 pt-20">
+
+     <View className="flex-row items-center justify-center mb-5 space-x-3">
+                <Image
+                  source={require('../../assets/images/logo.png')}
+                  className="w-12 h-12"
+                  resizeMode="contain"
+                />
+                <Text className="text-white text-xl font-inter-bold">Track It</Text>
+              </View>
+
+
       <View className="w-full p-5">
         <Text className="text-secondary font-inter-semibold text-xl">History..</Text>
+        
         <Text className="text-gray-400 font-inter-semibold text-base mb-3">
           Swipe left to Edit Entries & Long Press to Delete
         </Text>

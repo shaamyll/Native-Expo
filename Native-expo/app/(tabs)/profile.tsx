@@ -10,15 +10,12 @@ import {
 import React, { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
-import Wallet from '../components/wallet';
 import { useProfile } from '../hooks/useProfile';
-import Chart from '../components/chart';
-
-
+import Chart from '../components/DonutChart';
 
 const Profile = () => {
   const [name, setName] = useState('');
-  const [profilePic, setProfilePic] = useState('https://vanwinefest.ca/wp-content/uploads/bfi_thumb/profile-default-male-nyg4vc4i3m1d5pote7rfsv4o4c7p5ka5an0pselxcc-nyhjt6b1oifa23xq2ehfxoh9vink6vuxyns1y35vkc.png');
+  const [profilePic, setProfilePic] = useState('');
 
   //useProfile Hook
   const { profile, updateProfile } = useProfile();
@@ -77,11 +74,19 @@ const Profile = () => {
     }
   };
 
-
-
-
   return (
-    <ScrollView className="flex-1 pt-20 px-6 bg-primary dark:bg-[#0f172a]">
+    <ScrollView className="flex-1 pt-20 px-6 bg-primary ">
+
+   <View className="flex-row items-center justify-center mb-10 space-x-3">
+                <Image
+                  source={require('../../assets/images/logo.png')}
+                  className="w-12 h-12"
+                  resizeMode="contain"
+                />
+                <Text className="text-white text-xl font-inter-bold">Track It</Text>
+              </View>
+
+
       {/* Profile Image */}
       <View className="items-center ">
         <TouchableOpacity
@@ -95,9 +100,13 @@ const Profile = () => {
           className="relative"
         >
           <Image
-            source={{ uri: profilePic }}
-            className="w-32 h-32 rounded-full mb-5"
-          />
+  source={
+    profilePic
+      ? { uri: profilePic }
+      : require('../../assets/images/profile.png')
+  }
+  className="w-36 h-36 rounded-full mb-5"
+/>
 
           <View className="absolute bottom-4 right-2 bg-gray-900 p-2 rounded-full shadow-md">
             <Ionicons name="add" size={15} color="#fff" />
@@ -107,19 +116,19 @@ const Profile = () => {
         <TextInput
           value={name}
           onChangeText={setName}
-          placeholder="Your Name"
+          placeholder="Enter Your Name"
           className="font-inter-bold text-2xl text-secondary  text-center"
           placeholderTextColor="gray"
         />
 
       </View>
-        <Chart/>
-        <View>
 
-        </View>
+      <View>
+        <Chart />
+      </View>
 
 
-    </ScrollView> 
+    </ScrollView>
   );
 };
 

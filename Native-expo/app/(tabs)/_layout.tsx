@@ -2,6 +2,7 @@ import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ImageBackground, Text, View } from "react-native";
 import {  Wallet, PlusCircle, Clock, User, PlusSquare } from 'phosphor-react-native';
+import { LinearGradient } from "expo-linear-gradient";
 
 const FocusedIcon = ({ focused, IconComponent, title }: any) => {
   if (focused) {
@@ -30,6 +31,13 @@ export const unstable_settings = {
 
 export default function Layout() {
   return (
+      <LinearGradient
+      colors={['#0f172a', '#1e293b', '#1e40af']} // 🟣 Slate → Indigo
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={{ flex: 1 }}
+    >
+
     <Tabs screenOptions={{
       tabBarShowLabel: false,
       tabBarStyle: {
@@ -111,5 +119,6 @@ export default function Layout() {
 
 
     </Tabs>
+    </LinearGradient>
   );
 }

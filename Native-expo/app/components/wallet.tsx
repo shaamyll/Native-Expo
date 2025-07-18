@@ -22,7 +22,7 @@ const Wallet = () => {
   return (
     <View>
         <LinearGradient
-              colors={['#7C3AED', '#4ADE80']}
+              colors={['#0f172a', '#1e40af', '#16a34a']}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
               style={{

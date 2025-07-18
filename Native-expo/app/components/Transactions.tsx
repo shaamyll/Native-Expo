@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useGetTransactions } from '../hooks/useTransactions';
 import {
@@ -16,7 +16,26 @@ const Transactions = () => {
 
   return (
     <View className="w-full p-5 flex-1">
-      <Text className="text-secondary font-inter-semibold text-xl mb-3">Transactions</Text>
+
+
+      <View className="flex-row items-center justify-between px-4 mt-4">
+        <View className='mb-3'>
+          <Text className="text-secondary font-inter-semibold text-xl">
+            Recent Transactions
+          </Text>
+          <Text className="text-gray-400 font-inter-semibold text-base">
+            Track your Money..
+          </Text>
+        </View>
+
+        <TouchableOpacity >
+          <Text className="text-blue-400 font-inter-semibold text-base">
+            View All
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+
 
       <View className="max-h-[500px]">
         <ScrollView

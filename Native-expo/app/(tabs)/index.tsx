@@ -11,6 +11,16 @@ export default function Index() {
   return (
     <View className="flex-1 pt-20 bg-primary" >
 
+       <View className="flex-row items-center justify-center mb-5 space-x-3">
+                <Image
+                  source={require('../../assets/images/logo.png')}
+                  className="w-12 h-12"
+                  resizeMode="contain"
+                />
+                <Text className="text-white text-xl font-inter-bold">Track It</Text>
+              </View>
+
+
       <View className="flex-row items-center px-6 mb-2">
       {
         profile?.profilePic && (  <Image
