@@ -1,9 +1,8 @@
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Platform, KeyboardAvoidingView, Alert, Pressable } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Platform, KeyboardAvoidingView, Button } from 'react-native';
 import React, { useState } from 'react';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import dayjs from 'dayjs';
-import { useTransactions } from '../hooks/useTransactions';
+import { useAddTransaction } from '../hooks/useTransactions';
 import { v4 as uuidv4 } from 'uuid';
 import 'react-native-get-random-values';
 import Toast from 'react-native-toast-message';
@@ -12,7 +11,7 @@ import Toast from 'react-native-toast-message';
 const AddTransaction = () => {
   const [amount, setAmount] = useState('');
   const [type, setType] = useState<'income' | 'expense'>('expense');
-  const [category, setCategory] = useState('Food');
+  const [category, setCategory] = useState('');
   const [note, setNote] = useState('');
 
   //date
@@ -22,14 +21,14 @@ const AddTransaction = () => {
     setShowDatePicker(false);
     if (selectedDate) setDate(selectedDate);
   };
-
   const formatDate = (d: Date) => dayjs(d).format('MMM D YYYY');
+
   //Categories
   const categories = ['Salary', 'Transport', 'Clothes', 'Food', 'Others', 'Groceries'];
 
 
   //Add transaction function
-  const { addTransaction } = useTransactions();
+  const { addTransaction } = useAddTransaction();
 
   const handleAddTransaction = () => {
     if (!amount) {
@@ -38,7 +37,7 @@ const AddTransaction = () => {
       text1: 'Missing amount!',
       text2: 'Please enter an amount to continue.',
     });
-    } else {
+  }
       addTransaction({
         id: uuidv4() as string,
         amount: parseFloat(amount),
@@ -54,8 +53,6 @@ const AddTransaction = () => {
       setCategory('Food');
       setDate(new Date());
       setType('expense');
-    }
-
 
   }
 
@@ -178,7 +175,7 @@ const AddTransaction = () => {
         </View>
        
         <TouchableOpacity className="bg-purple-300 p-4 rounded-xl items-center">
-          <Text className="text-primary font-inter-bold text-lg" onPress={handleAddTransaction}>Add Entry</Text>
+          <Text className="text-primary font-inter-bold text-lg" onPress={handleAddTransaction}>Add Transaction</Text>
         </TouchableOpacity>
       </ScrollView>
 

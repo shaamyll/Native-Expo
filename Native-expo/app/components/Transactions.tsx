@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from 'react-native'
 import React from 'react'
-import { useTransactions } from '../hooks/useTransactions';
+import { useGetTransactions } from '../hooks/useTransactions';
 import {
   Hamburger,
   ShoppingCart,
@@ -12,8 +12,7 @@ import {
 
 const Transactions = () => {
 
-  const { transactions } = useTransactions()
-
+  const { transactions } = useGetTransactions()
 
   return (
     <View className="w-full p-5 flex-1">
@@ -57,14 +56,20 @@ const Transactions = () => {
                 </View>
 
                 {/* Transaction Details */}
-                <View className="flex-1">
+                <View className="flex-1 mt-1">
                   <View className="flex-row justify-between">
                     <Text className="text-secondary text-lg font-inter-semibold">{item.category}</Text>
                     <Text className="text-secondary text-lg font-inter-semibold">
                       {item.type === 'expense' ? `- ₹${item.amount}` : `₹${item.amount}`}
                     </Text>
                   </View>
-                  <Text className="text-gray-400 text-sm mt-1 font-inter-semibold">{item.date}</Text>
+                  <View className="flex-row justify-between">
+                    {item?.note ? (
+                      <Text className="text-gray-400 text-sm mt-1 font-inter-semibold">{item.note}</Text>
+                    ) : null}
+                    <Text className="text-gray-400 text-sm mt-1 font-inter-semibold">{item.date}</Text>
+
+                  </View>
                 </View>
               </View>
 

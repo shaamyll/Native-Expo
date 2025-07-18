@@ -5,12 +5,16 @@ import {
   ScrollView,
   TextInput,
   Alert,
+  Text
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import Wallet from '../components/wallet';
 import { useProfile } from '../hooks/useProfile';
+import Chart from '../components/chart';
+
+
 
 const Profile = () => {
   const [name, setName] = useState('');
@@ -73,6 +77,9 @@ const Profile = () => {
     }
   };
 
+
+
+
   return (
     <ScrollView className="flex-1 pt-20 px-6 bg-primary dark:bg-[#0f172a]">
       {/* Profile Image */}
@@ -106,21 +113,13 @@ const Profile = () => {
         />
 
       </View>
+        <Chart/>
+        <View>
 
-      {/* 💳 Wallet Card */}
-      <Wallet />
-      {/* <View className="bg-gradient-to-r from-[#7C3AED] to-[#4ADE80] rounded-2xl p-5 mb-6">
-          <Text className="text-white text-xl font-semibold">Total Balance</Text>
-          <Text className="text-white text-4xl font-bold mt-1">₹5,473.00</Text>
-          <View className="flex-row justify-between mt-4">
-            <Text className="text-white">Income: ₹3,365.00</Text>
-            <Text className="text-white">Expense: ₹940.00</Text>
-          </View>
+        </View>
 
-          
-        </View> */}
 
-    </ScrollView>
+    </ScrollView> 
   );
 };
 

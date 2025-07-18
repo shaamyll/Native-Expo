@@ -2,12 +2,12 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Ionicons } from '@expo/vector-icons'
-import { useTransactions } from '../hooks/useTransactions'
+import { useGetTransactions } from '../hooks/useTransactions'
 import { ArrowDownLeft, ArrowUpRight } from 'phosphor-react-native';
 
 const Wallet = () => {
 
-   const { transactions } = useTransactions()
+   const { transactions } = useGetTransactions()
 
   const totalIncome = transactions
     .filter(t => t.type === 'income')

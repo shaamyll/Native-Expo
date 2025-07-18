@@ -1,11 +1,17 @@
-import { View, Text, FlatList } from 'react-native'
-import React, { useState } from 'react'
-import { Ionicons } from '@expo/vector-icons';
-import { useTransactions } from '../hooks/useTransactions';
-//native picker for filtering transactions
-import { Picker } from '@react-native-picker/picker';
-//DropDownPicker for month selection
+import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, Modal } from 'react-native';
+import React, { useState } from 'react';
+import { useDeleteTransaction, useGetTransactions } from '../hooks/useTransactions';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {
+  Hamburger,
+  ShoppingCart,
+  YoutubeLogo,
+  DotsThreeOutline,
+  CreditCard,
+  CarProfile,
+} from 'phosphor-react-native';
+import { Swipeable } from 'react-native-gesture-handler';
+import EditTransactionModal from '../components/EditTransactionModal';
 
 
 type Transaction = {
@@ -14,21 +20,20 @@ type Transaction = {
   category: string;
   type: 'income' | 'expense';
   date: string;
+  note?: string;
 };
 
 const history = () => {
+  const { transactions, isLoading } = useGetTransactions();
 
-  const { transactions } = useTransactions();
+  const [filter, setFilter] = useState<string>('');
+  const [openFilters, setOpenFilters] = useState(false);
 
-  const [filter, setFilter] = useState<string>('all');
-
-
-  //Month filter
   const [selectedMonth, setSelectedMonth] = useState('');
   const [openMonth, setOpenMonth] = useState(false);
 
   const [monthItems, setMonthItems] = useState([
-    { label: 'All', value: 'All' },
+    { label: 'All Months', value: 'All' },
     { label: 'Jan', value: 'Jan' },
     { label: 'Feb', value: 'Feb' },
     { label: 'Mar', value: 'Mar' },
@@ -43,11 +48,7 @@ const history = () => {
     { label: 'Dec', value: 'Dec' },
   ]);
 
-
-
-
-  //All filters to map
-  const filters = [
+  const [filterItems, setFilterItems] = useState([
     { label: 'All', value: 'all' },
     { label: 'Income', value: 'income' },
     { label: 'Expense', value: 'expense' },
@@ -56,13 +57,11 @@ const history = () => {
     { label: 'Groceries', value: 'Groceries' },
     { label: 'Salary', value: 'Salary' },
     { label: 'Subscriptions', value: 'Subscriptions' },
-  ];
+  ]);
 
   const filteredTransactions = React.useMemo(() => {
     let result: Transaction[] = [...transactions];
 
-
-    //Filtyer by month
     if (selectedMonth && selectedMonth !== 'All') {
       result = result.filter(item => {
         const parts = item.date?.trim().split(' ');
@@ -71,7 +70,6 @@ const history = () => {
       });
     }
 
-    // ✅ Filter by category or type
     if (filter === 'income') {
       result = result.filter(item => item.type === 'income');
     } else if (filter === 'expense') {
@@ -86,32 +84,58 @@ const history = () => {
   }, [transactions, filter, selectedMonth]);
 
 
+  //Delete
+  const [showModal, setShowModal] = useState(false);
+  const [deleteTransactionId, setDeleteTransactionId] = useState<string | null>(null);
+
+  const { deleteTransaction } = useDeleteTransaction();
+
+  const handleConfirmDelete = () => {
+    if (deleteTransactionId) {
+      deleteTransaction(deleteTransactionId);
+      setShowModal(false);
+      setDeleteTransactionId(null);
+    }
+  };
+
+
+  //Edit
+    const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+
+  const handleEdit = (transaction: Transaction) => {
+    setSelectedTransaction(transaction);
+    setShowEditModal(true);
+  };
+
 
   return (
-    <View className='bg-primary flex-1 pt-20'>
-
+    <View className="bg-primary flex-1 pt-20">
       <View className="w-full p-5">
-        <Text className="text-secondary font-inter-semibold text-xl mb-3">Transactions</Text>
+        <Text className="text-secondary font-inter-semibold text-xl">History..</Text>
+        <Text className="text-gray-400 font-inter-semibold text-base mb-3">
+          Swipe left to Edit Entries & Long Press to Delete
+        </Text>
 
-        {/* Filter Pickers */}
         <View className="flex-row justify-between mb-4">
-          {/* Main Filter Picker */}
           <View className="flex-1 mr-2 bg-[#1e1e1e] rounded-md">
-            <Picker
-              selectedValue={filter}
-              onValueChange={(value) => setFilter(value)}
-              style={{ color: 'white' }}
-            >
-              {filters.map((item) => (
-                <Picker.Item label={item.label} value={item.value} key={item.value} />
-              ))}
-            </Picker>
+            <DropDownPicker
+              placeholder="Select a Filter"
+              open={openFilters}
+              value={filter}
+              items={filterItems}
+              setOpen={setOpenFilters}
+              setValue={setFilter}
+              setItems={setFilterItems}
+              style={{ backgroundColor: '#1e1e1e', borderRadius: 10 }}
+              textStyle={{ color: 'white', fontFamily: 'InterSemiBold' }}
+              dropDownContainerStyle={{ backgroundColor: '#2e2e2e' }}
+            />
           </View>
 
-          {/* Month Filter Picker */}
           <View className="flex-1 ml-2 bg-[#1e1e1e] rounded-md">
             <DropDownPicker
-            placeholder='Select a Month'
+              placeholder="Select a Month"
               open={openMonth}
               value={selectedMonth}
               items={monthItems}
@@ -123,62 +147,121 @@ const history = () => {
               dropDownContainerStyle={{ backgroundColor: '#2e2e2e' }}
             />
           </View>
-
         </View>
 
+        {isLoading ? (
+          <View className="flex-1 justify-center items-center mt-20">
+            <ActivityIndicator size="large" color="#ffffff" />
+            <Text className="text-secondary mt-4">Loading transactions...</Text>
+          </View>
+        ) : (
+          <FlatList
+            data={filteredTransactions}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => {
+              const renderRightActions = () => (
+                <TouchableOpacity
+                  onPress={() => handleEdit(item)}
+                  className="bg-blue-600 justify-center items-center w-20 h-[77px]   rounded-md"
+                >
+                  <Text className="text-white font-bold">Edit</Text>
+                </TouchableOpacity>
+              );
 
-        <FlatList
-          data={filteredTransactions}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View className="w-full bg-gray-900 p-4 mb-3 rounded-md flex-row items-start gap-4">
-              {/* Icon Container */}
-              <View
-                className={`p-3 rounded-lg ${item.category === 'Salary' ? 'bg-green-500' :
-                  item.category === 'Groceries' ? 'bg-amber-500' :
-                    item.category === 'Transport' ? 'bg-blue-500' :
-                      item.category === 'Food' ? 'bg-pink-500' :
-                        item.category === 'Subscriptions' ? 'bg-indigo-500' :
-                          'bg-gray-500'
-                  }`}
-              >
-                <Ionicons
-                  name={
-                    item.category === 'Salary' ? 'cash-outline' :
-                      item.category === 'Groceries' ? 'storefront-outline' :
-                        item.category === 'Transport' ? 'car-outline' :
-                          item.category === 'Food' ? 'restaurant-outline' :
-                            item.category === 'Subscriptions' ? 'tv-outline' :
-                              'albums-outline'
-                  }
-                  size={25}
-                  color="#ffffff"
-                />
-              </View>
+              return (
+                <TouchableOpacity  
+                     onLongPress={() => {
+                    setDeleteTransactionId(item.id);
+                    setShowModal(true);
+                  }}
+                >
+                  <Swipeable renderRightActions={renderRightActions}>
+                  <View className="w-full bg-gray-900 p-4 mb-3 rounded-md flex-row items-start gap-4">
+                    <View
+                      className={`p-3 rounded-lg ${
+                        item.category === 'Salary'
+                          ? 'bg-green-500'
+                          : item.category === 'Groceries'
+                          ? 'bg-amber-500'
+                          : item.category === 'Transport'
+                          ? 'bg-blue-500'
+                          : item.category === 'Food'
+                          ? 'bg-pink-500'
+                          : item.category === 'Subscriptions'
+                          ? 'bg-indigo-500'
+                          : 'bg-gray-500'
+                      }`}
+                    >
+                      {item.category === 'Salary' && <CreditCard size={30} weight="duotone" />}
+                      {item.category === 'Groceries' && <ShoppingCart size={30} weight="duotone" color="#fff" />}
+                      {item.category === 'Transport' && <CarProfile size={30} weight="duotone" />}
+                      {item.category === 'Food' && <Hamburger size={30} weight="duotone" color="#fff" />}
+                      {item.category === 'Subscriptions' && <YoutubeLogo size={30} weight="duotone" color="#fff" />}
+                      {!['Salary', 'Groceries', 'Transport', 'Food', 'Subscriptions'].includes(item.category) && (
+                        <DotsThreeOutline size={30} weight="duotone" color="#fff" />
+                      )}
+                    </View>
 
-              {/* Transaction Details */}
-              <View className="flex-1">
-                <View className="flex-row justify-between">
-                  <Text className="text-secondary text-lg font-inter-semibold">{item.category}</Text>
-                  <Text className="text-secondary text-lg font-inter-semibold">
-                    {item.type === 'expense' ? `- ₹${item.amount}` : `₹${item.amount}`}
-                  </Text>
-                </View>
-                <Text className="text-gray-400 text-sm mt-1 font-inter-semibold">{item.date}</Text>
-              </View>
-            </View>
-          )}
-          ListEmptyComponent={
-            <Text className="text-gray-500 text-center mt-10">
-              No transactions yet
-            </Text>
-          }
-        />
-
+                    <View className="flex-1 mt-1">
+                      <View className="flex-row justify-between">
+                        <Text className="text-secondary text-lg font-inter-semibold">{item.category}</Text>
+                        <Text className="text-secondary text-lg font-inter-semibold">
+                          {item.type === 'expense' ? `- ₹${item.amount}` : `₹${item.amount}`}
+                        </Text>
+                      </View>
+                      <View className="flex-row justify-between">
+                        {item?.note ? (
+                          <Text className="text-gray-400 text-sm mt-1 font-inter-semibold">{item.note}</Text>
+                        ) : null}
+                        <Text className="text-gray-400 text-sm mt-1 font-inter-semibold">{item.date}</Text>
+                      </View>
+                    </View>
+                  </View>
+                </Swipeable>
+                </TouchableOpacity>
+              );
+            }}
+            ListEmptyComponent={
+              <Text className="text-gray-500 text-center mt-10">No transactions yet</Text>
+            }
+          />
+        )}
       </View>
 
-    </View>
-  )
-}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={showModal}
+        onRequestClose={() => setShowModal(false)}
+      >
+        <View className="flex-1 justify-center items-center bg-black/50">
+          <View className="bg-white p-6 rounded-xl w-[80%] items-center">
+            <Text className="text-lg font-bold text-black mb-4">Delete Transaction?</Text>
+            <View className="flex-row gap-4">
+              <TouchableOpacity
+                onPress={handleConfirmDelete}
+                className="bg-red-500 px-4 py-2 rounded-md"
+              >
+                <Text className="text-white">Yes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setShowModal(false)}
+                className="bg-gray-300 px-4 py-2 rounded-md"
+              >
+                <Text className="text-black">Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
 
-export default history
+         <EditTransactionModal
+        visible={showEditModal}
+        transaction={selectedTransaction}
+        onClose={() => setShowEditModal(false)}
+      />
+    </View>
+  );
+};
+
+export default history;
