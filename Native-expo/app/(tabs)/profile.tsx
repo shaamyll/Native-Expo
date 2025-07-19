@@ -124,7 +124,8 @@ const Profile = () => {
       </View>
 
       <View>
-        <Text className="text-secondary font-inter-semibold text-center text-lg mt-6 mb-2">Track your Expenses</Text>
+        <Text className="text-gray-400 font-inter-semibold text-center text-lg mt-6 mb-1">Here's how you've been spending lately
+</Text>
         <Chart />
       </View>
 

@@ -173,6 +173,8 @@ const history = () => {
           <FlatList
             data={filteredTransactions}
             keyExtractor={(item, index) => index.toString()}
+            contentInset={{ bottom: 40 }}
+            scrollIndicatorInsets={{ bottom: 40 }}
             renderItem={({ item }) => {
               const renderRightActions = () => (
                 <TouchableOpacity

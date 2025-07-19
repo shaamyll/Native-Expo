@@ -45,10 +45,11 @@ const Transactions = () => {
 
 
       <View className="max-h-[500px]">
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 20 }}
-        >
+       <ScrollView
+  showsVerticalScrollIndicator={false}
+  contentContainerStyle={{ paddingBottom: 40 }}
+>
+
           {transactions.length > 0 ? (
             transactions.map((item) => (
               <View
