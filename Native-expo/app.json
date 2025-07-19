@@ -9,7 +9,16 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.TrackIt",
+      "splash": {
+        "image": "./assets/images/logo.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#2a264c"
+      },
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -17,7 +26,12 @@
         "backgroundColor": "#2a264c"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.TrackIt"
+      "package": "com.anonymous.TrackIt",
+      "splash": {
+        "image": "./assets/images/logo.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#2a264c"
+      }
     },
     "web": {
       "bundler": "metro",
@@ -32,7 +46,7 @@
           "image": "./assets/images/logo.png",
           "imageWidth": 300,
           "resizeMode": "contain",
-          "backgroundColor": "#fff"
+          "backgroundColor": "#2a264c"
         }
       ],
       "expo-font",

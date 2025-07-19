@@ -32,7 +32,7 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
         <GestureHandlerRootView
-          style={{ flex: 1, backgroundColor: '#0f172a' }} // ← add backgroundColor here
+          style={{ flex: 1, backgroundColor: '#2a264c' }} // ← add backgroundColor here
           onLayout={onLayoutRootView}
         >
 
