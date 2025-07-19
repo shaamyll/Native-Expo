@@ -9,6 +9,7 @@ import {
   CreditCard,
   CarProfile,
 } from 'phosphor-react-native'
+import { Link } from 'expo-router';
 
 const Transactions = () => {
 
@@ -28,11 +29,11 @@ const Transactions = () => {
           </Text>
         </View>
 
-        <TouchableOpacity >
-          <Text className="text-blue-400 font-inter-semibold text-base">
+        <Link href={'/(tabs)/history'}>
+        <TouchableOpacity className='text-secondary font-inter-semibold text-base'>
             View All
-          </Text>
         </TouchableOpacity>
+        </Link>
       </View>
 
 

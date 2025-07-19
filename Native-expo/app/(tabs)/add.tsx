@@ -189,8 +189,8 @@ const AddTransaction = () => {
           />
         </View>
 
-        <TouchableOpacity className="bg-purple-300 p-4 rounded-xl items-center">
-          <Text className="text-primary font-inter-bold text-lg" onPress={handleAddTransaction}>Add Transaction</Text>
+        <TouchableOpacity className="bg-purple-300 p-4 rounded-xl items-center" onPress={handleAddTransaction}>
+          <Text className="text-primary font-inter-bold text-lg" >Add Transaction</Text>
         </TouchableOpacity>
       </ScrollView>
 
