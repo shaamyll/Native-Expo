@@ -14,7 +14,7 @@ export default function Index() {
        <View className="flex-row items-center justify-center mb-5 space-x-3">
                 <Image
                   source={require('../../assets/images/logo.png')}
-                  className="w-12 h-12"
+                  className="w-10 h-10"
                   resizeMode="contain"
                 />
                 <Text className="text-white text-xl font-inter-bold">Track It</Text>

@@ -51,7 +51,7 @@ const EditTransactionModal = ({ visible, onClose, transaction }: any) => {
             type,
             category,
             note,
-            date,
+            date : date ? formatDate(date) : '',
         });
         onClose();
     };

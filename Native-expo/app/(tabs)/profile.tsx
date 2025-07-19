@@ -80,7 +80,7 @@ const Profile = () => {
    <View className="flex-row items-center justify-center mb-10 space-x-3">
                 <Image
                   source={require('../../assets/images/logo.png')}
-                  className="w-12 h-12"
+                  className="w-10 h-10"
                   resizeMode="contain"
                 />
                 <Text className="text-white text-xl font-inter-bold">Track It</Text>
@@ -88,7 +88,7 @@ const Profile = () => {
 
 
       {/* Profile Image */}
-      <View className="items-center ">
+      <View className="items-center mt-5 ">
         <TouchableOpacity
           onPress={() =>
             Alert.alert('Update Photo', 'Choose an option', [
@@ -124,6 +124,7 @@ const Profile = () => {
       </View>
 
       <View>
+        <Text className="text-secondary font-inter-semibold text-center text-lg mt-6 mb-2">Track your Expenses</Text>
         <Chart />
       </View>
 

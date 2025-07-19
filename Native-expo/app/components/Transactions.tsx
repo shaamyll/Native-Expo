@@ -8,6 +8,7 @@ import {
   DotsThreeOutline,
   CreditCard,
   CarProfile,
+  TShirt,
 } from 'phosphor-react-native'
 import { Link } from 'expo-router';
 
@@ -29,10 +30,15 @@ const Transactions = () => {
           </Text>
         </View>
 
-        <Link href={'/(tabs)/history'}>
-        <TouchableOpacity className='text-secondary font-inter-semibold text-base'>
-            View All
-        </TouchableOpacity>
+        <Link href="/(tabs)/history" asChild>
+          <TouchableOpacity
+            className="border border-secondary rounded-lg px-4 py-2"
+            activeOpacity={0.7}
+          >
+            <Text className="text-secondary font-inter-semibold text-base">
+              View All
+            </Text>
+          </TouchableOpacity>
         </Link>
       </View>
 
@@ -51,18 +57,20 @@ const Transactions = () => {
               >
                 {/* Icon with background */}
                 <View
-                  className={`p-3  rounded-lg ${item.category === 'Salary'
-                    ? 'bg-green-500'
-                    : item.category === 'Groceries'
-                      ? 'bg-amber-500'
-                      : item.category === 'Transport'
-                        ? 'bg-blue-500'
-                        : item.category === 'Food'
-                          ? 'bg-pink-500'
-                          : item.category === 'Subscriptions'
-                            ? 'bg-indigo-500'
-                            : 'bg-gray-500'
-                    }`}
+                   className={`p-3 rounded-lg ${item.category === 'Salary'
+                            ? 'bg-green-500'
+                            : item.category === 'Groceries'
+                              ? 'bg-amber-500'
+                              : item.category === 'Transport'
+                                ? 'bg-blue-500'
+                                : item.category === 'Food'
+                                  ? 'bg-pink-500'
+                                  : item.category === 'Subscriptions'
+                                    ? 'bg-indigo-500'
+                                    : item.category === 'Clothes'
+                                      ? 'bg-violet-500'
+                                      : 'bg-gray-500'
+                          }`}
                 >
 
                   {item.category === 'Salary' && <CreditCard size={32} weight="duotone" />}
@@ -70,7 +78,8 @@ const Transactions = () => {
                   {item.category === 'Transport' && <CarProfile size={32} weight="duotone" />}
                   {item.category === 'Food' && <Hamburger size={30} weight="duotone" color="#fff" />}
                   {item.category === 'Subscriptions' && <YoutubeLogo size={30} weight="duotone" color="#fff" />}
-                  {!['Salary', 'Groceries', 'Transport', 'Food', 'Subscriptions'].includes(item.category) && (
+                  {item.category === 'Clothes' && <TShirt size={30} weight="duotone" color="#fff" />}
+                  {!['Salary', 'Groceries', 'Transport', 'Food', 'Subscriptions','Clothes'].includes(item.category) && (
                     <DotsThreeOutline size={30} weight="duotone" color="#fff" />
                   )}
                 </View>

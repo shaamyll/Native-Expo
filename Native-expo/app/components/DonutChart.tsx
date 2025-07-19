@@ -39,8 +39,8 @@ const DonutChart = ({ radius = 80, strokeWidth = 20 }: any) => {
   style={{
     borderRadius: 12,
     padding: 24,
-    marginHorizontal: 10,
-    marginTop: 25,
+    marginHorizontal: 2,
+    marginTop: 10,
   }}
 >
   <Text className="text-white text-lg font-semibold mb-7 ">
@@ -48,7 +48,6 @@ const DonutChart = ({ radius = 80, strokeWidth = 20 }: any) => {
   </Text>
 
       <View className="flex-row items-center justify-center space-x-2">
-        <Text>Chart p</Text>
         {/* Donut Chart */}
         <View className="relative">
           <Svg width={radius * 2} height={radius * 2}>

@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, Modal ,Image } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, Modal, Image } from 'react-native';
 import React, { useState } from 'react';
 import { useDeleteTransaction, useGetTransactions } from '../hooks/useTransactions';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -9,6 +9,9 @@ import {
   DotsThreeOutline,
   CreditCard,
   CarProfile,
+  Tag,
+  Tote,
+  TShirt,
 } from 'phosphor-react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import EditTransactionModal from '../components/EditTransactionModal';
@@ -100,7 +103,7 @@ const history = () => {
 
 
   //Edit
-    const [showEditModal, setShowEditModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
 
   const handleEdit = (transaction: Transaction) => {
@@ -112,19 +115,19 @@ const history = () => {
   return (
     <View className="bg-primary flex-1 pt-20">
 
-     <View className="flex-row items-center justify-center mb-5 space-x-3">
-                <Image
-                  source={require('../../assets/images/logo.png')}
-                  className="w-12 h-12"
-                  resizeMode="contain"
-                />
-                <Text className="text-white text-xl font-inter-bold">Track It</Text>
-              </View>
+      <View className="flex-row items-center justify-center mb-5 space-x-3">
+        <Image
+          source={require('../../assets/images/logo.png')}
+          className="w-10 h-10"
+          resizeMode="contain"
+        />
+        <Text className="text-white text-xl font-inter-bold">Track It</Text>
+      </View>
 
 
-      <View className="w-full p-5">
+      <View className="w-full px-5 mt-3">
         <Text className="text-secondary font-inter-semibold text-xl">History..</Text>
-        
+
         <Text className="text-gray-400 font-inter-semibold text-base mb-3">
           Swipe left to Edit Entries & Long Press to Delete
         </Text>
@@ -181,55 +184,57 @@ const history = () => {
               );
 
               return (
-                <TouchableOpacity  
-                     onLongPress={() => {
+                <TouchableOpacity
+                  onLongPress={() => {
                     setDeleteTransactionId(item.id);
                     setShowModal(true);
                   }}
                 >
                   <Swipeable renderRightActions={renderRightActions}>
-                  <View className="w-full bg-gray-900 p-4 mb-3 rounded-md flex-row items-start gap-4">
-                    <View
-                      className={`p-3 rounded-lg ${
-                        item.category === 'Salary'
-                          ? 'bg-green-500'
-                          : item.category === 'Groceries'
-                          ? 'bg-amber-500'
-                          : item.category === 'Transport'
-                          ? 'bg-blue-500'
-                          : item.category === 'Food'
-                          ? 'bg-pink-500'
-                          : item.category === 'Subscriptions'
-                          ? 'bg-indigo-500'
-                          : 'bg-gray-500'
-                      }`}
-                    >
-                      {item.category === 'Salary' && <CreditCard size={30} weight="duotone" />}
-                      {item.category === 'Groceries' && <ShoppingCart size={30} weight="duotone" color="#fff" />}
-                      {item.category === 'Transport' && <CarProfile size={30} weight="duotone" />}
-                      {item.category === 'Food' && <Hamburger size={30} weight="duotone" color="#fff" />}
-                      {item.category === 'Subscriptions' && <YoutubeLogo size={30} weight="duotone" color="#fff" />}
-                      {!['Salary', 'Groceries', 'Transport', 'Food', 'Subscriptions'].includes(item.category) && (
-                        <DotsThreeOutline size={30} weight="duotone" color="#fff" />
-                      )}
-                    </View>
+                    <View className="w-full bg-gray-900 p-4 mb-3 rounded-md flex-row items-start gap-4">
+                      <View
+                        className={`p-3 rounded-lg ${item.category === 'Salary'
+                            ? 'bg-green-500'
+                            : item.category === 'Groceries'
+                              ? 'bg-amber-500'
+                              : item.category === 'Transport'
+                                ? 'bg-blue-500'
+                                : item.category === 'Food'
+                                  ? 'bg-pink-500'
+                                  : item.category === 'Subscriptions'
+                                    ? 'bg-indigo-500'
+                                    : item.category === 'Clothes'
+                                      ? 'bg-violet-500'
+                                      : 'bg-gray-500'
+                          }`}
+                      >
+                        {item.category === 'Salary' && <CreditCard size={30} weight="duotone" />}
+                        {item.category === 'Groceries' && <ShoppingCart size={30} weight="duotone" color="#fff" />}
+                        {item.category === 'Transport' && <CarProfile size={30} weight="duotone" />}
+                        {item.category === 'Food' && <Hamburger size={30} weight="duotone" color="#fff" />}
+                        {item.category === 'Clothes' && <TShirt size={30} weight="duotone" color="#fff" />}
+                        {item.category === 'Subscriptions' && <YoutubeLogo size={30} weight="duotone" color="#fff" />}
+                        {!['Salary', 'Groceries', 'Transport', 'Food', 'Subscriptions', 'Clothes'].includes(item.category) && (
+                          <DotsThreeOutline size={30} weight="duotone" color="#fff" />
+                        )}
+                      </View>
 
-                    <View className="flex-1 mt-1">
-                      <View className="flex-row justify-between">
-                        <Text className="text-secondary text-lg font-inter-semibold">{item.category}</Text>
-                        <Text className="text-secondary text-lg font-inter-semibold">
-                          {item.type === 'expense' ? `- ₹${item.amount}` : `₹${item.amount}`}
-                        </Text>
-                      </View>
-                      <View className="flex-row justify-between">
-                        {item?.note ? (
-                          <Text className="text-gray-400 text-sm mt-1 font-inter-semibold">{item.note}</Text>
-                        ) : null}
-                        <Text className="text-gray-400 text-sm mt-1 font-inter-semibold">{item.date}</Text>
+                      <View className="flex-1 mt-1">
+                        <View className="flex-row justify-between">
+                          <Text className="text-secondary text-lg font-inter-semibold">{item.category}</Text>
+                          <Text className="text-secondary text-lg font-inter-semibold">
+                            {item.type === 'expense' ? `- ₹${item.amount}` : `₹${item.amount}`}
+                          </Text>
+                        </View>
+                        <View className="flex-row justify-between">
+                          {item?.note ? (
+                            <Text className="text-gray-400 text-sm mt-1 font-inter-semibold">{item.note}</Text>
+                          ) : null}
+                          <Text className="text-gray-400 text-sm mt-1 font-inter-semibold">{item.date}</Text>
+                        </View>
                       </View>
                     </View>
-                  </View>
-                </Swipeable>
+                  </Swipeable>
                 </TouchableOpacity>
               );
             }}
@@ -267,7 +272,7 @@ const history = () => {
         </View>
       </Modal>
 
-         <EditTransactionModal
+      <EditTransactionModal
         visible={showEditModal}
         transaction={selectedTransaction}
         onClose={() => setShowEditModal(false)}
