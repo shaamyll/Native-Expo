@@ -1,5 +1,4 @@
 import {   Text, View, Image } from "react-native";
-import { useEffect, useState } from "react";
 import Wallet from "../components/wallet";
 import Transactions from "../components/Transactions";
 import { useProfile } from "../hooks/useProfile";

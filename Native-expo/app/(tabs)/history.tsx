@@ -194,19 +194,18 @@ const history = () => {
                     <View className="w-full bg-gray-900 p-4 mb-3 rounded-md flex-row items-start gap-4">
                       <View
                         className={`p-3 rounded-lg ${item.category === 'Salary'
-                            ? 'bg-green-500'
-                            : item.category === 'Groceries'
-                              ? 'bg-amber-500'
-                              : item.category === 'Transport'
-                                ? 'bg-blue-500'
-                                : item.category === 'Food'
-                                  ? 'bg-pink-500'
-                                  : item.category === 'Subscriptions'
-                                    ? 'bg-indigo-500'
-                                    : item.category === 'Clothes'
-                                      ? 'bg-violet-500'
-                                      : 'bg-gray-500'
-                          }`}
+                          ? 'bg-green-500'
+                          : item.category === 'Groceries'
+                            ? 'bg-amber-500'
+                            : item.category === 'Transport'
+                              ? 'bg-blue-500'
+                              : item.category === 'Food'
+                                ? 'bg-pink-500'
+                                : item.category === 'Subscriptions'
+                                  ? 'bg-indigo-500'
+                                  : item.category === 'Clothes'
+                                    ? 'bg-violet-500'
+                                    : item.category === 'Others' ? 'bg-orange-500' : ''}`}
                       >
                         {item.category === 'Salary' && <CreditCard size={30} weight="duotone" />}
                         {item.category === 'Groceries' && <ShoppingCart size={30} weight="duotone" color="#fff" />}
@@ -214,9 +213,8 @@ const history = () => {
                         {item.category === 'Food' && <Hamburger size={30} weight="duotone" color="#fff" />}
                         {item.category === 'Clothes' && <TShirt size={30} weight="duotone" color="#fff" />}
                         {item.category === 'Subscriptions' && <YoutubeLogo size={30} weight="duotone" color="#fff" />}
-                        {!['Salary', 'Groceries', 'Transport', 'Food', 'Subscriptions', 'Clothes'].includes(item.category) && (
-                          <DotsThreeOutline size={30} weight="duotone" color="#fff" />
-                        )}
+                        {item.category === 'Others' && <DotsThreeOutline size={30} weight="duotone" color="#fff" />}
+
                       </View>
 
                       <View className="flex-1 mt-1">
